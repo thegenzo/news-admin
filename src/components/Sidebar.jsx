@@ -1,10 +1,9 @@
 import React from "react";
-
-// import hasAnyPermissions
-import hasAnyPermission from "../utils/Permissions";
-
-// import link
+// import Link
 import { Link, useLocation } from "react-router-dom";
+
+// import permissions
+import hasAnyPermission from "../utils/Permissions.jsx";
 
 const Sidebar = () => {
   // assigning location variable
@@ -13,14 +12,14 @@ const Sidebar = () => {
   // destructuring pathname from location
   const { pathname } = location;
 
-  // javascript split method to get the name of the path in array
+  // Javascript split method to get the name of the path in array
   const activeRoute = pathname.split("/");
 
   return (
     <div>
       <nav
         id="sidebarMenu"
-        className="sidebar d-lg-lock bg-tertiary text-white collapse"
+        className="sidebar d-lg-block bg-tertiary text-white collapse"
         data-simplebar
       >
         <div className="sidebar-inner px-3 pt-3">
@@ -68,6 +67,9 @@ const Sidebar = () => {
                       />
                     </svg>
                   </span>
+                  <span className="sidebar-text text-center fw-bold ms-2">
+                    NEWSAPP ADMIN
+                  </span>
                 </span>
               </span>
             </li>
@@ -107,6 +109,11 @@ const Sidebar = () => {
                 </span>
               </Link>
             </li>
+
+            <li
+              role="separator"
+              className="dropdown-divider mt-4 mb-3 border-gray-700"
+            ></li>
 
             {hasAnyPermission(["categories.index"]) && (
               <li
@@ -323,6 +330,6 @@ const Sidebar = () => {
       </nav>
     </div>
   );
-};
+}
 
 export default Sidebar;
