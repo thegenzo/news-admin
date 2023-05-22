@@ -11,7 +11,7 @@ const LayoutDefault = ({ children }) => {
 					<img src="" alt="" className="navbar-brand-light" />
 				</a>
 				<div className="d-flex align-items-center">
-					<button className="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-aria-label="Toggle Navigation">
+					<button className="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle Navigation">
 						<span className="navbar-toggle-icon"></span>
 					</button>
 				</div>
