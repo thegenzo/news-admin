@@ -13,6 +13,11 @@ const Login = lazy(() => import("../views/Auth/Login"));
 // import permission view index
 const PermissionIndex = lazy(() => import("../views/Permissions/Index"));
 
+// import roles view index
+const RolesIndex = lazy(() => import("../views/Roles/Index"));
+const RolesCreate = lazy(() => import("../views/Roles/Create"));
+const RolesEdit = lazy(() => import('../views/Roles/Edit'));
+
 const RoutesIndex = () => {
   return (
     <Routes>
@@ -45,6 +50,40 @@ const RoutesIndex = () => {
           <Suspense fallback={<Loader />}>
             <PrivateRoutes>
               <PermissionIndex />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+
+      {/* private route roles */}
+      <Route
+        path="/roles"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <RolesIndex />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+      {/* private route roles/create */}
+      <Route
+        path="/roles/create"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <RolesCreate />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+      {/* private route roles/edit/:id */}
+      <Route
+        path="/roles/edit/:id"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <RolesEdit />
             </PrivateRoutes>
           </Suspense>
         }
