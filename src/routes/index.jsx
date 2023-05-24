@@ -13,10 +13,15 @@ const Login = lazy(() => import("../views/Auth/Login"));
 // import permission view index
 const PermissionIndex = lazy(() => import("../views/Permissions/Index"));
 
-// import roles view index
+// import roles view
 const RolesIndex = lazy(() => import("../views/Roles/Index"));
 const RolesCreate = lazy(() => import("../views/Roles/Create"));
 const RolesEdit = lazy(() => import('../views/Roles/Edit'));
+
+// import users view
+const UsersIndex = lazy(() => import("../views/Users/Index"));
+const UsersCreate = lazy(() => import("../views/Users/Create"));
+const UsersEdit = lazy(() => import("../views/Users/Edit"));
 
 const RoutesIndex = () => {
   return (
@@ -84,6 +89,40 @@ const RoutesIndex = () => {
           <Suspense fallback={<Loader />}>
             <PrivateRoutes>
               <RolesEdit />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+
+      {/** private route users */}
+      <Route
+        path="/users"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <UsersIndex />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+      {/** private route users/create */}
+      <Route
+        path="/users/create"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <UsersCreate />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+      {/** private route users/create */}
+      <Route
+        path="/users/edit/:id"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <UsersEdit />
             </PrivateRoutes>
           </Suspense>
         }
