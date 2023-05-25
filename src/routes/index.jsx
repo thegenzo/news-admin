@@ -23,6 +23,11 @@ const UsersIndex = lazy(() => import("../views/Users/Index"));
 const UsersCreate = lazy(() => import("../views/Users/Create"));
 const UsersEdit = lazy(() => import("../views/Users/Edit"));
 
+// import categories view
+const CategoriesIndex = lazy(() => import("../views/Categories/Index"));
+const CategoriesCreate = lazy(() => import("../views/Categories/Create"));
+const CategoriesEdit = lazy(() => import("../views/Categories/Edit"));
+
 const RoutesIndex = () => {
   return (
     <Routes>
@@ -123,6 +128,40 @@ const RoutesIndex = () => {
           <Suspense fallback={<Loader />}>
             <PrivateRoutes>
               <UsersEdit />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+
+      {/** private route categories */}
+      <Route 
+        path="/categories"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <CategoriesIndex />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+      {/** private route categories/create */}
+      <Route 
+        path="/categories/create"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <CategoriesCreate />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+      {/** private route categories/create */}
+      <Route 
+        path="/categories/edit/:id"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <CategoriesEdit />
             </PrivateRoutes>
           </Suspense>
         }
