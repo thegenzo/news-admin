@@ -1,84 +1,96 @@
+//import react
 import React, { useMemo, useRef } from "react";
-import { useRecoilState } from "recoil";
-import { editorState } from "../store";
-import ReactQuill from "react-quill";
+
+//import api
 import Api from "../api";
 
+//import react Quill
+import ReactQuill from "react-quill";
+
 // quill CSS
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
 
-const Editor = (props) => {
-	// state with recoil state
-	const [content, setContent] = useRecoilState(editorState);
+//import recoil state
+import { useRecoilState } from "recoil";
 
-	// init ref React Quill
-	let quillRef = useRef(ReactQuill || null);
+//import global state
+import { editorState } from "../store";
 
-	// function imageHandler
-	const imageHandler = () => {
-		const input = document.createElement("input");
-		input.setAttribute("type", "file");
-		input.setAttribute("accept", "image/*");
-		input.click();
+function Editor(props) {
+  //state with recoil state
+  const [content, setContent] = useRecoilState(editorState);
 
-		const formData = new FormData();
+  //init ref React Quill
+  let quillRef = useRef(ReactQuill || null);
 
-		input.onchange = async () => {
-			const range = quillRef.current.getEditor().getSelection();
-			let quillObj = quillRef.current.getEditor();
-			const file = input.files;
-			formData.append("image", file[0]);
+  //function "imageHandler"
+  const imageHandler = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
 
-			await Api.post(`/api/public/posts/storeImage`, formData, {
-				// header
-				headers: {
-					'content-type': 'multipart/form-data'
-				}
-			})
-			.then(response => {
-				quillObj.editor.insertEmbed(range.index, 'image', response.data.url);
-			});
+    const formData = new FormData();
 
-			return 
-		}
-	}
+    input.onchange = async () => {
+      const range = quillRef.current.getEditor().getSelection();
+      let quillObj = quillRef.current.getEditor();
+      const file = input.files;
+      formData.append("image", file[0]);
 
-	const modules = useMemo(() => ({
-		toolbar: {
-			container: [
-				['bold', 'italic', 'underline', 'strike'],				// toggled buttons
-				['blockquote', 'code-block'],
+      await Api.post("/api/public/posts/storeImage", formData, {
+        //header
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      }).then((response) => {
+        quillObj.editor.insertEmbed(range.index, "image", response.data.url);
+      });
 
-				[{ 'header': 1 }, { 'header': 2 }],								// custom button values
-				[{ 'list': 'ordered'}, { 'list': 'bullet' }],
-				[{ 'direction': 'rtl'}],													// text direction
+      return;
+    };
+  };
 
-				[{ 'size': ['small', false, 'large', 'huge'] }],	// custom dropdown
-				[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          ["bold", "italic", "underline", "strike"], // toggled buttons
+          ["blockquote", "code-block"],
 
-				[{ 'color': [] }, { 'background': [] }],					// dropdown with defaults from theme
-				[{ 'align': [] }],
-				['link', 'image'],
-			],
-			handlers: {
-				image: imageHandler
-			}
-		}
-	}), []);
+          [{ header: 1 }, { header: 2 }], // custom button values
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ direction: "rtl" }], // text direction
 
-	// function onContentChange
-	const onContentChange = (content) => {
-		setContent(content)
-	}
-	return (
-		<ReactQuill 
-			ref={quillRef}
-			theme="snow"
-			value={content || props.content}
-			modules={modules}
-			onChange={(content) => onContentChange(content)}
-		/>
-	);
-};
+          [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+          [{ align: [] }],
+          ["link", "image"],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    []
+  );
+
+  //function "onContentChange"
+  const onContentChange = (content) => {
+    setContent(content);
+  };
+
+  return (
+    <ReactQuill
+      ref={quillRef}
+      theme="snow"
+      value={content || props.content}
+      modules={modules}
+      onChange={(content) => onContentChange(content)}
+    />
+  );
+}
 
 export default React.memo(Editor);
