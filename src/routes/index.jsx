@@ -36,6 +36,9 @@ const PostsEdit = lazy(() => import("../views/Posts/Edit"));
 // import sliders view
 const SlidersIndex = lazy(() => import("../views/Sliders/Index"));
 
+// import forbidden view
+const Forbidden = lazy(() => import("../views/Forbidden/Index"));
+
 const RoutesIndex = () => {
   return (
     <Routes>
@@ -216,6 +219,18 @@ const RoutesIndex = () => {
           <Suspense fallback={<Loader />}>
             <PrivateRoutes>
               <SlidersIndex />
+            </PrivateRoutes>
+          </Suspense>
+        }
+      />
+
+      {/** forbidden route */}
+      <Route 
+        path="/forbidden"
+        element={
+          <Suspense fallback={<Loader />}>
+            <PrivateRoutes>
+              <Forbidden />
             </PrivateRoutes>
           </Suspense>
         }
